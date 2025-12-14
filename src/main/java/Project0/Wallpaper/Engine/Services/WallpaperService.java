@@ -1,32 +1,45 @@
 package Project0.Wallpaper.Engine.Services;
 
 import Project0.Wallpaper.Engine.Model.Wallpaper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors ;
+import jakarta.annotation.PostConstruct;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class WallpaperService {
 
-    private final List<Wallpaper> wallpapers = List.of (
-            new Wallpaper(1, "https://picsum.photos/id/237/2000/3000", "bike"),
-            new Wallpaper(2, "https://picsum.photos/id/1003/2000/3000", "nature"),
-            new Wallpaper(3, "https://picsum.photos/id/1025/2000/3000", "anime"),
-            new Wallpaper(4, "https://picsum.photos/id/1062/2000/3000", "bike"),
-            new Wallpaper(5, "https://picsum.photos/id/1039/2000/3000", "nature")
-    );
+    private Map<String, List<Wallpaper>> wallpapers = new HashMap<>();
+    private final Random random = new Random();
 
-    public List<Wallpaper> getByCategory(String category){
-        return wallpapers.stream().filter(w -> w.getCategoryTag().equalsIgnoreCase(category)).collect(Collectors.toList());
+    @PostConstruct
+    public void loadWallpapers() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            InputStream inputStream = getClass().getResourceAsStream("/wallpapers.json");
+
+            wallpapers = mapper.readValue(inputStream, new TypeReference<Map<String, List<Wallpaper>>>() {});
+            System.out.println("Wallpapers loaded → " + wallpapers.size() + " categories");
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load wallpapers.json", e);
+        }
     }
 
-    public Wallpaper getRandomByCategory(String category){
-        List<Wallpaper> filtered =  wallpapers.stream().filter(w -> w.getCategoryTag().equalsIgnoreCase(category)).collect(Collectors.toList());
-        if (filtered.isEmpty()) return null ;
-        Random r = new Random() ;
-        return filtered.get(r.nextInt(filtered.size()));
+    public List<Wallpaper> getWallpapersByCategory(String category) {
+        return wallpapers.getOrDefault(category.toLowerCase(), Collections.emptyList());
+    }
+
+    public Wallpaper getRandomWallpaper(String category) {
+        List<Wallpaper> list = getWallpapersByCategory(category);
+        if (list.isEmpty()) return null;
+        return list.get(random.nextInt(list.size()));
+    }
+
+    public Set<String> getCategories() {
+        return wallpapers.keySet();
     }
 }

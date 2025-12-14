@@ -1,0 +1,33 @@
+{
+  "bike": [
+    {
+      "id": 1,
+      "imageUrl": "https://images.pexels.com/photos/1468379/pexels-photo-1468379.jpeg",
+      "category": "bike"
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg",
+      "category": "bike"
+    }
+  ],
+  "nature": [
+    {
+      "id": 3,
+      "imageUrl": "https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg",
+      "category": "nature"
+    },
+    {
+      "id": 4,
+      "imageUrl": "https://images.pexels.com/photos/34950/pexels-photo.jpg",
+      "category": "nature"
+    }
+  ],
+  "dark": [
+    {
+      "id": 5,
+      "imageUrl": "https://images.pexels.com/photos/167964/pexels-photo-167964.jpeg",
+      "category": "dark"
+    }
+  ]
+}

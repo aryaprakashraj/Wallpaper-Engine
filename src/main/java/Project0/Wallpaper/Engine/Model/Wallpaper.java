@@ -1,23 +1,27 @@
 package Project0.Wallpaper.Engine.Model;
 
 public class Wallpaper {
-    private long id ;
-    private String imageUrl ;
-    private String categoryTag ;
+    private int id;
+    private String imageUrl;
+    private String category;
 
-    public Wallpaper(long id, String imageUrl, String categoryTag){
-        this.id = id ;
-        this.imageUrl = imageUrl ;
-        this.categoryTag = categoryTag ;
+    public Wallpaper() {}
+
+    public Wallpaper(int id, String imageUrl, String category) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+        this.category = category;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public String getImageUrl(){
-        return imageUrl ;
+
+    public String getImageUrl() {
+        return imageUrl;
     }
-    public String getCategoryTag() {
-        return categoryTag;
+
+    public String getCategory() {
+        return category;
     }
 }
